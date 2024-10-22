@@ -4,10 +4,12 @@
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import dotenv from 'dotenv'
 import { corsOptions } from '~/config/corsOptions'
 import { APIs_V1 } from '~/routes/v1/'
 
 const START_SERVER = () => {
+  dotenv.config()
   // Init Express App
   const app = express()
 
@@ -34,11 +36,13 @@ const START_SERVER = () => {
   const LOCAL_DEV_APP_HOST = 'localhost'
   const AUTHOR = 'TrungQuanDev'
   app.listen(LOCAL_DEV_APP_PORT, LOCAL_DEV_APP_HOST, () => {
-    console.log(`Local DEV: Hello ${AUTHOR}, Back-end Server is running successfully at Host: ${LOCAL_DEV_APP_HOST} and Port: ${LOCAL_DEV_APP_PORT}`)
+    console.log(
+      `Local DEV: Hello ${AUTHOR}, Back-end Server is running successfully at Host: ${LOCAL_DEV_APP_HOST} and Port: ${LOCAL_DEV_APP_PORT}`
+    )
   })
 }
 
-(async () => {
+;(async () => {
   try {
     // Start Back-end Server
     console.log('Starting Server...')
