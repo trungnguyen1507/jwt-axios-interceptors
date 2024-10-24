@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
 import Divider from '@mui/material/Divider'
 import authorizedAxiosInstance from '~/utils/authorizedAxios'
-import { toast } from 'react-toastify'
 import { API_ROOT } from '~/utils/constants'
 
 function Dashboard() {
@@ -17,7 +16,6 @@ function Dashboard() {
       const res = await authorizedAxiosInstance.get(
         `${API_ROOT}/v1/dashboards/access`
       )
-      console.log(res.data)
       setUser(res.data)
     }
     fetchData()

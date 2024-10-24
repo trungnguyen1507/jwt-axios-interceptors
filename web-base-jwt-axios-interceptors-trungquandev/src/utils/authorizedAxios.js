@@ -9,7 +9,7 @@ let authorizedAxiosInstance = axios.create()
 authorizedAxiosInstance.defaults.timeout = 1000 * 60 * 10
 
 // withCredentials: sẽ cho phép axios tự động đính kèm và gửi cookie trong mỗi request lên BE (phục vụ trường hợp nếu chúng ta sử dụng JWT Tokens) theo cơ chế httpOnly Cookie
-// authorizedAxiosInstance.defaults.withCredentials = true
+authorizedAxiosInstance.defaults.withCredentials = true
 
 /**
  * Cấu hình Interceptors (Bộ đánh chặn vào giữa mọi Request & Response)
@@ -17,7 +17,13 @@ authorizedAxiosInstance.defaults.timeout = 1000 * 60 * 10
 // Add a request interceptor: Can thiệp vào giữa những cái request API
 authorizedAxiosInstance.interceptors.request.use(
   (config) => {
-    // Do something before request is sent
+    // Lấy accessToken từ LocalStorage và đính kèm vào header
+    const accessToken = localStorage.getItem('accessToken')
+    if (accessToken) {
+      // Cần thêm "Bearer" vì chúng ta cần tuân thủ theo tiêu chuẩn OAuth 2.0 trong việc xác định loại token đang sử dụng
+      // Bearer là định nghĩa loại token dùng cho việc xác thực và uỷ quyền
+      config.headers.Authorization = `Bearer ${accessToken}`
+    }
     return config
   },
   (error) => {
@@ -37,7 +43,6 @@ authorizedAxiosInstance.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
 
-    console.log(error)
     // Xử lý tập trung phần hiển thị thông báo lỗi trả về từ mọi API
     // Ngoại trừ mã 410 - GONE phục vụ việc tự động refresh lại token
     if (error.response?.status !== 410) {
