@@ -16,13 +16,6 @@ const MOCK_DATABASE = {
   }
 }
 
-/**
- * 2 cái chữ ký bí mật quan trọng trong dự án. Dành cho JWT - Jsonwebtokens
- * Lưu ý phải lưu vào biến môi trường ENV trong thực tế cho bảo mật.
- * Ở đây mình làm Demo thôi nên mới đặt biến const và giá trị random ngẫu nhiên trong code nhé.
- * Xem thêm về biến môi trường: https://youtu.be/Vgr3MWb7aOw
- */
-
 const login = async (req, res) => {
   try {
     if (
