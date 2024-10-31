@@ -18,13 +18,8 @@ const MOCK_DATABASE = {
 
 const login = async (req, res) => {
   try {
-    if (
-      req.body.email !== MOCK_DATABASE.USER.EMAIL ||
-      req.body.password !== MOCK_DATABASE.USER.PASSWORD
-    ) {
-      res
-        .status(StatusCodes.FORBIDDEN)
-        .json({ message: 'Your email or password is incorrect!' })
+    if (req.body.email !== MOCK_DATABASE.USER.EMAIL || req.body.password !== MOCK_DATABASE.USER.PASSWORD) {
+      res.status(StatusCodes.FORBIDDEN).json({ message: 'Your email or password is incorrect!' })
       return
     }
 
@@ -36,11 +31,7 @@ const login = async (req, res) => {
     }
 
     // Tạo ra 2 loại token: accessToken và refreshToken để trả về cho phía FE
-    const accessToken = await JwtProvider.generateToken(
-      userInfo,
-      process.env.ACCESS_TOKEN_SECRET_SIGNATURE,
-      '1h'
-    )
+    const accessToken = await JwtProvider.generateToken(userInfo, process.env.ACCESS_TOKEN_SECRET_SIGNATURE, '1h')
 
     const refreshToken = await JwtProvider.generateToken(
       userInfo,
@@ -74,7 +65,10 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-    // Do something
+    // Xoá cookie
+    res.clearCookie('accessToken')
+    res.clearCookie('refreshToken')
+
     res.status(StatusCodes.OK).json({ message: 'Logout API success!' })
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error)

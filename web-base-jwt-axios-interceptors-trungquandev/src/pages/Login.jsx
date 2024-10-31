@@ -22,10 +22,7 @@ function Login() {
   const navigate = useNavigate()
 
   const submitLogIn = async (data) => {
-    const res = await authorizedAxiosInstance.post(
-      `${API_ROOT}/v1/users/login`,
-      data
-    )
+    const res = await authorizedAxiosInstance.post(`${API_ROOT}/v1/users/login`, data)
     const userInfo = {
       id: res.data.id,
       email: res.data.email
@@ -130,13 +127,7 @@ function Login() {
               </Box>
             </Box>
             <CardActions sx={{ padding: '0.5em 1em 1em 1em' }}>
-              <Button
-                type='submit'
-                variant='contained'
-                color='primary'
-                size='large'
-                fullWidth
-              >
+              <Button type='submit' variant='contained' color='primary' size='large' fullWidth>
                 Login
               </Button>
             </CardActions>
