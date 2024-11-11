@@ -1,7 +1,8 @@
 // Author: TrungQuanDev: https://youtube.com/@trungquandev
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
+import { Routes, Route, Navigate, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import Login from '~/pages/Login'
 import Dashboard from '~/pages/Dashboard'
+import { history } from './helpers'
 
 // Sử dụng Outlet của react-router-dom để hiển thị các Child Route
 const ProtectedRoutes = () => {
@@ -21,6 +22,9 @@ const UnauthorizedRoutes = () => {
 }
 
 function App() {
+  history.navigate = useNavigate()
+  history.location = useLocation()
+
   return (
     <Routes>
       <Route path='/' element={<Navigate to='/login' replace={true} />} />

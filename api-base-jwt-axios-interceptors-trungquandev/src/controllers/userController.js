@@ -31,11 +31,17 @@ const login = async (req, res) => {
     }
 
     // Tạo ra 2 loại token: accessToken và refreshToken để trả về cho phía FE
-    const accessToken = await JwtProvider.generateToken(userInfo, process.env.ACCESS_TOKEN_SECRET_SIGNATURE, '1h')
+    const accessToken = await JwtProvider.generateToken(
+      userInfo,
+      process.env.ACCESS_TOKEN_SECRET_SIGNATURE,
+      5
+      // '1h'
+    )
 
     const refreshToken = await JwtProvider.generateToken(
       userInfo,
       process.env.REFRESH_TOKEN_SECRET_SIGNATURE,
+      // 15
       '14 days'
     )
 
@@ -93,7 +99,12 @@ const refreshToken = async (req, res) => {
       email: refreshTokenDecoded.email
     }
     // Tạo accessToken mới
-    const accessToken = await JwtProvider.generateToken(userInfo, process.env.ACCESS_TOKEN_SECRET_SIGNATURE, '1h')
+    const accessToken = await JwtProvider.generateToken(
+      userInfo,
+      process.env.ACCESS_TOKEN_SECRET_SIGNATURE,
+      5
+      // '1h'
+    )
     // Res lại cookie accessToken mới cho trường hợp sử dụng Cookie
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
